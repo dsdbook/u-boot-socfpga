@@ -25,6 +25,7 @@
 #include <command.h>
 #include <asm/byteorder.h>
 #include <asm/cache.h>
+#include <fdt_support.h>
 
 #define NIOS_MAGIC 0x534f494e /* enable command line and initrd passing */
 
@@ -64,6 +65,7 @@ int do_bootm_linux(int flag, int argc, char * const argv[], bootm_headers_t *ima
 	 * verified with fdt magic. when both initrd and fdt are used at the
 	 * same time, fdt must follow immediately after initrd.
 	 */
+	fdt_fixup_ethernet(of_flat_tree);
 	kernel(NIOS_MAGIC, initrd_start, initrd_end, commandline);
 	/* does not return */
 
