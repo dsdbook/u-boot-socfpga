@@ -130,7 +130,11 @@ void tmr_isr (void *arg)
 	 * status register.
 	 */
 	writel (0, &tmr->status);
-	timestamp += CONFIG_SYS_NIOS_TMRMS;
+
+//dxzhang : maybe there is an error!
+//	timestamp += CONFIG_SYS_NIOS_TMRMS;
+	timestamp += 1;
+
 #ifdef CONFIG_STATUS_LED
 	status_led_tick(timestamp);
 #endif

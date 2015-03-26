@@ -55,6 +55,38 @@ int do_portio_out (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
 		addr = simple_strtoul (argv[1], NULL, 16);
 		value = simple_strtoul (argv[2], NULL, 16);
 	}
+
+//add by dxzhang
+#if defined (CONFIG_NIOS2)
+
+	{
+		unsigned short port = addr;
+
+		switch (size) {
+		default:
+		case 1:
+		    {
+			unsigned char ch = value;
+			__asm__ volatile ("stbio %0, 0(%1)"::"r" (ch), "r" (port));
+		    }
+			break;
+		case 2:
+		    {
+			unsigned short w = value;
+			__asm__ volatile ("sthio %0, 0(%1)"::"r" (w), "r" (port));
+		    }
+			break;
+		case 4:
+			__asm__ volatile ("stwio %0, 0(%1)"::"r" (value), "r" (port));
+
+			break;
+		}
+	}
+
+#endif	/* CONFIG_NIOS2 */
+
+//end by dxzhang
+
 #if defined (CONFIG_X86)
 
 	{
@@ -112,6 +144,43 @@ int do_portio_in (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
 		size = cmd_get_data_size (argv[0], 1);
 		addr = simple_strtoul (argv[1], NULL, 16);
 	}
+
+//add by dxzhang
+#if defined (CONFIG_NIOS2)
+
+	{
+		unsigned short port = addr;
+
+		switch (size) {
+		default:
+		case 1:
+		    {
+			unsigned char ch;
+			__asm__ volatile ("ldbuio %0, 0(%1)":"=r" (ch):"r" (port));
+
+			printf (" %02x\n", ch);
+		    }
+			break;
+		case 2:
+		    {
+			unsigned short w;
+			__asm__ volatile ("ldhuio %0, 0(%1)":"=r" (w):"r" (port));
+
+			printf (" %04x\n", w);
+		    }
+			break;
+		case 4:
+		    {
+			unsigned long l;
+			__asm__ volatile ("ldwio %0, 0(%1)":"=r" (l):"r" (port));
+
+			printf (" %08lx\n", l);
+		    }
+			break;
+		}
+	}
+#endif	/* CONFIG_NIOS2 */
+
 #if defined (CONFIG_X86)
 
 	{
