@@ -146,17 +146,17 @@ int flash_erase (flash_info_t * info, int s_first, int s_last)
 		if (info->protect[sect] == 0) {	/* not protected */
 			addr2 = (unsigned char *) info->start[sect];
 //add by dxzhang
-			writeb (FIRST_ADDR, 0xaa);
+			writeb (0xaa,FIRST_ADDR);
 			flush_dcache(FIRST_ADDR,1);
-			writeb (SECOND_ADDR,  0x55);
+			writeb (0x55,SECOND_ADDR);
 			flush_dcache(SECOND_ADDR,1);
-			writeb (FIRST_ADDR,  0x80);
+			writeb (0x80,FIRST_ADDR);
 			flush_dcache(FIRST_ADDR,1);
-			writeb (FIRST_ADDR,  0xaa);
+			writeb (0xaa,FIRST_ADDR);
 			flush_dcache(FIRST_ADDR,1);
-			writeb (SECOND_ADDR,  0x55);
+			writeb (0x55,SECOND_ADDR);
 			flush_dcache(SECOND_ADDR,1);
-			writeb (addr2, 0x30);
+			writeb (0x30,addr2);
 			flush_dcache(addr2,1);
 //end by dxzhang
 
@@ -202,13 +202,13 @@ int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
 		}
 //add by dxzhang
 
-		writeb (FIRST_ADDR,  0xaa);
+		writeb (0xaa,FIRST_ADDR);
 		flush_dcache(FIRST_ADDR,1);
-		writeb (SECOND_ADDR,  0x55);
+		writeb (0x55,SECOND_ADDR);
 		flush_dcache(SECOND_ADDR,1);
-		writeb (FIRST_ADDR,  0xa0);
+		writeb (0xa0,FIRST_ADDR);
 		flush_dcache(FIRST_ADDR,1);
-		writeb (dst, b);
+		writeb (b,dst);
 		flush_dcache(dst,1);
 //end by dxzhang
 		/* Verify write */
