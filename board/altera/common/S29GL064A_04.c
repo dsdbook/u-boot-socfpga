@@ -205,6 +205,7 @@ int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
 	CONFIG_SYS_FLASH_WORD_SIZE *dst = (CONFIG_SYS_FLASH_WORD_SIZE *) addr;
 	CONFIG_SYS_FLASH_WORD_SIZE b;
 	ulong start;
+//	printf("write_buff, src = %08x, dst = %08x\n",src,dst);
 	while (cnt) {
 		/* Check for sufficient erase */
 		b = *(CONFIG_SYS_FLASH_WORD_SIZE *)src;
@@ -232,7 +233,7 @@ int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
 			}
 		}
 		dst++;
-		(CONFIG_SYS_FLASH_WORD_SIZE *)src++;
+		src+=2;
 		cnt--;
 	}
 

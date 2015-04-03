@@ -36,6 +36,7 @@
 
 #define CONFIG_BOARD_EARLY_INIT_F 1	/* enable early board-spec. init*/
 
+#define CONFIG_BOOTDELAY 5
 
 /*------------------------------------------------------------------------
  * MEMORY ORGANIZATION
@@ -44,8 +45,8 @@
  *	-Global data is placed below the heap.
  *	-The stack is placed below global data (&grows down).
  *----------------------------------------------------------------------*/
-#define CONFIG_SYS_MONITOR_LEN		(256 * 1024)	/* Reserve 128k		*/
-#define CONFIG_GBL_DATA_SIZE	128		/* Global data size rsvd*/
+#define CONFIG_SYS_MONITOR_LEN		(1024 * 1024)	/* Reserve 128k		*/
+#define CONFIG_GBL_DATA_SIZE		128		/* Global data size rsvd*/
 #define CONFIG_SYS_MALLOC_LEN		(CONFIG_ENV_SIZE + 128*1024)
 
 //#define CONFIG_MONITOR_BASE	TEXT_BASE
